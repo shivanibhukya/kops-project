@@ -3,10 +3,13 @@ kind: Service
 metadata:
   name: api
   namespace: dev
-spec:
-  ports:
-    - port: 3500
-      protocol: TCP
-  type: ClusterIP
-  selector:
+  labels:
     role: api
+spec:
+  type: ClusterIP # Private service within the cluster
+  ports:
+    - port: 3500 # Port for internal communication
+      targetPort: 3500 # Port on the backend container
+      protocol: TCP
+  selector:
+    role: api # Selects pods with label 'role: api'

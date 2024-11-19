@@ -3,10 +3,13 @@ kind: Service
 metadata:
   name: frontend
   namespace: dev
-spec:
-  ports:
-    - port: 3000
-      protocol: TCP
-  type: ClusterIP
-  selector:
+  labels:
     role: frontend
+spec:
+  type: LoadBalancer # Publicly accessible
+  ports:
+    - port: 80 # Public port to access the application
+      targetPort: 3000 # Port on the frontend container
+      protocol: TCP
+  selector:
+    role: frontend # Selects pods with label 'role: frontend'

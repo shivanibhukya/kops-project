@@ -3,11 +3,14 @@ kind: Service
 metadata:
   name: mongo-headless
   namespace: dev
-spec:
-  clusterIP: None
-  selector:
+  labels:
     app: mongodb
+spec:
+  clusterIP: None # Headless service for direct pod communication
   ports:
-    - port: 27017
-      targetPort: 27017
+    - port: 27017 # Port for MongoDB
+      targetPort: 27017 # Port on the MongoDB container
+      protocol: TCP
       name: mongodb
+  selector:
+    app: mongodb # Selects pods with label 'app: mongodb'
